@@ -19,7 +19,6 @@ class CreateCarsTable extends Migration
             $table->string('car_type');
             $table->string('plate_number');
             $table->integer('fuel');
-            $table->integer('bought_date');
             $table->timestamps();
         });
     }

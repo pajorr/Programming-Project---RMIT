@@ -17,27 +17,7 @@ class UserController extends Controller
         return User::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
+   
     /**
      * Display the specified resource.
      *
@@ -46,21 +26,19 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $var = User::findOrfail($id);
-        return $var;
+        try{
+            $var = User::findOrfail($id);
+
+            return response([$var]);
+
+        }catch(\Exception $e){
+            return response([
+                $e->getMessage()
+            ]);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
+   
     /**
      * Update the specified resource in storage.
      *
@@ -70,7 +48,44 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            if($request->name != NULL || $request->email !=NULL || $request->password !=NULL){
+
+                $var = User::findOrfail($id);
+
+                if($request->name == NULL){
+                    $request->name = $var->name;
+                }
+
+                if($request->email == NULL){
+                    $request->email = $var->email;
+                }
+
+                if($request->password == NULL){
+                    $request->password == $var->password;
+                }
+
+                $var->update([
+                        'name' => $request->name,
+                        'password' => $request->password,
+                        'email' => $request->email,
+                     ]);
+
+                return response([
+                    "Successful"
+                ]);
+
+            }else{
+               return response([
+                    "No Changes Were Made"
+                ]);
+            }
+
+        }catch(\Exception $e){
+            return response([
+                $e->getMessage()
+            ]);
+        }
     }
 
     /**
