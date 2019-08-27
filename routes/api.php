@@ -17,19 +17,16 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
-//Route::post('login', 'AuthController@login');
-Route::post('register', 'AuthController@register');
-Route::get('/showuser', 'UserController@index');
-Route::get('/user/{id}', 'UserController@show');
+//Route::get("testopen", 'TestController@open');
 
-/*Route::middleware('jwt.auth')->group(function(){
-    
-    Route::get('logout', 'AuthController@logout');
-});
-*/
 Route::post('login', 'AuthController@login');
-Route::get("testopen", 'TestController@open');
+Route::post('register', 'AuthController@register');
 
+Route::apiResources([
+    'users' => 'UserController',
+    'cars' => 'CarController',
+    'books' => 'BookedController'
+]);
 
 Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('logout', 'AuthController@logout');

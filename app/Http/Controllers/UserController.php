@@ -27,7 +27,7 @@ class UserController extends Controller
     public function show($id)
     {
         try{
-            $var = User::findOrfail($id);
+            $var = User::findOrFail($id);
 
             return response([$var]);
 
@@ -51,7 +51,7 @@ class UserController extends Controller
         try{
             if($request->name != NULL || $request->email !=NULL || $request->password !=NULL){
 
-                $var = User::findOrfail($id);
+                $var = User::findOrFail($id);
 
                 if($request->name == NULL){
                     $request->name = $var->name;
@@ -97,7 +97,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         try{
-            $var = User::findOrfail($id);
+            $var = User::findOrFail($id);
             if(isset($var)){
                 $var->delete();
                 return response()->json([

@@ -29,7 +29,7 @@ class CarController extends Controller
        
        try{
             //prevents creating a record with nothing in it
-            if($request->car_name != NULL && $request->car_type != NULL && $request->plate_number != NULL && $requet->fuel != NULL){
+            if($request->car_name != NULL && $request->car_type != NULL && $request->plate_number != NULL && $request->fuel != NULL){
 
                 $newData = [
                 'car_name' => $request->car_name,
@@ -65,7 +65,7 @@ class CarController extends Controller
     public function show($id)
     {
         try{
-            $var = Car::findOrfail($id);
+            $var = Car::findOrFail($id);
 
             return response([$var]);
 
@@ -89,9 +89,9 @@ class CarController extends Controller
     {
 
         try{
-            if($request->car_name != NULL || $request->car_type != NULL || $request->plate_number != NULL || $requet->fuel != NULL){
+            if($request->car_name != NULL || $request->car_type != NULL || $request->plate_number != NULL || $request->fuel != NULL){
 
-               $var = Car::findOrfail($id);
+               $var = Car::findOrFail($id);
 
                if($request->car_name == NULL){
                     $request->car_name = $var->car_name;
@@ -143,14 +143,14 @@ class CarController extends Controller
     public function destroy($id)
     {
         try{
-            $var = Car::findOrfail($id);
-             if(isset($var)){
+            $var = Car::findOrFail($id);
+            if(isset($var)){
                 $var -> delete();
 
                 return response([
                     "Successful"
                 ]);
-
+            }
         }catch(\Exception $e){
             return response([
                 $e->getMessage()

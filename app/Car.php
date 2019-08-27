@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Car extends Model
 {
     protected $fillable = [
-    	'car_name', 'car_type', 'plate_number', 'fuel'
+    	'car_name', 'car_type', 'plate_number', 'fuel', 'taken'
+    ];
+
+    protected $casts = [
+    	'taken' => 'boolean'
     ];
 
      public function bookeds(){
