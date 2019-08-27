@@ -50,4 +50,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+     public function bookeds(){
+        return $this->hasOne('App\Booked', 'user_id');
+    }
 }
