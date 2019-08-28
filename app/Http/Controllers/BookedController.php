@@ -74,7 +74,18 @@ class BookedController extends Controller
      */
     public function show($id)
     {
-        
+        try{
+            
+            $var = Booked::where('user_id',$id)->first();
+            return response([
+                'booked' => $var
+            ]);
+        }catch(\Exception $e){
+            return response([
+                $e->getMessage()
+            ]);
+        }
+
     }
 
    
@@ -101,19 +112,5 @@ class BookedController extends Controller
         
     }
 
-   public function showBookedByUserId($id)
-    {
-       try{
-            
-            $var = Booked::where('user_id',$id)->first();
-            return response([
-                'booked' => $var
-            ]);
-        }catch(\Exception $e){
-            return response([
-                $e->getMessage()
-            ]);
-        }
-
-    }    
+   
 }
