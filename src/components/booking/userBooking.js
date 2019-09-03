@@ -9,6 +9,14 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FilledInput from '@material-ui/core/FilledInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -36,7 +44,77 @@ const useStyles = makeStyles(theme => ({
 }));
 
 class Booking extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            carList: [],
+            carSelected: '',
+            loading: true,
+            userId: ''
+        };
+
+        this.getCar = this.getCar.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.bookCar = this.bookCar.bind(this);
+    }
+
+    getCar() {
+        fetch('http://157.230.244.234/api/cars', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }).then(res => res.json())
+            .then(data => {
+                const carData = JSON.stringify(data);
+                const obj = JSON.parse(carData);
+                this.setState({...this.state.carList, carList: obj}); //how to set a state value
+                console.log(this.state.carList);
+                this.setState({data, loading: false});
+            })
+            .catch(err => console.log(err));
+    };
+
+    renderCarList() {
+        return this.state.carList.map(obj => (
+            <MenuItem value={obj.id}>
+                {obj.car_name}
+            </MenuItem>
+        ));
+    }
+
+    bookCar() {
+        fetch('http://157.230.244.234/api/books', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: this.state.userId,
+                car_id: this.state.carSelected,
+                book_date: '2019-09-03' //change to proper date
+            })
+        }).then(res => res.json())
+            .catch(err => console.log(err));
+    }
+
+    handleChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
+    componentDidMount() {
+        this.getCar();
+    }
+
     render() {
+        if(this.state.loading) {
+            return 'Loading...'
+        }
+
         return(
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
@@ -49,58 +127,43 @@ class Booking extends React.Component {
                     </Typography>
                     <form className={useStyles.form} noValidate>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextField
                                     autoComplete="fname"
-                                    name="firstName"
+                                    name="userId"
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="firstName"
-                                    label="First Name"
+                                    label="User ID"
                                     autoFocus
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="lname"
+                                    onChange={this.handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="carClass"
-                                    label="Preferred Automotive Class"
-                                    name="carClass"
-                                    autoComplete="carClass"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="carModel"
-                                    label="Preferred Car Model"
-                                    name="carModel"
-                                    autoComplete="carModel"
-                                />
+                                <FormControl variant="outlined">
+                                    <InputLabel htmlFor="outline-aged-simple">
+                                        Age
+                                    </InputLabel>
+                                    <Select
+                                        value={this.state.carSelected}
+                                        onChange={this.handleChange}
+                                        input={<OutlinedInput labelWidth={976} name="carSelected" id="outline-aged-simple"/>}
+                                    >
+                                        <MenuItem>
+                                            <em>None</em>
+                                        </MenuItem>
+                                        {this.renderCarList()}
+                                    </Select>
+                                </FormControl>
                             </Grid>
                         </Grid>
                         <Button
-                            type="submit"
+                            type="button"
                             fullWidth
                             variant="contained"
                             color="primary"
                             className={useStyles.submit}
+                            onClick={this.bookCar}
                         >
                             Book
                         </Button>

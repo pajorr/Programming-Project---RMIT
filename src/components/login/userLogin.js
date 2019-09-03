@@ -39,6 +39,41 @@ const useStyles = makeStyles(theme => ({
 
 class Login extends React.Component {
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            email: {},
+            password: {}
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.loginUser = this.loginUser.bind(this);
+    }
+
+    loginUser() {
+        return fetch('http://157.230.244.234/api/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password
+            })
+        }).then(function res(response) {
+           return response.json();
+        }).then(token => {
+            const tokenString = JSON.stringify(token);
+            localStorage.setItem("token", JSON.parse(tokenString).data.token);
+        })
+    };
+
+    handleChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
     render() {
         return(
             <Container component="main" maxWidth="xs">
@@ -61,6 +96,7 @@ class Login extends React.Component {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={this.handleChange}
                         />
                         <TextField
                             variant="outlined"
@@ -72,17 +108,19 @@ class Login extends React.Component {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={this.handleChange}
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
                         <Button
-                            type="submit"
+                            type="button"
                             fullWidth
                             variant="contained"
                             color="primary"
                             className={useStyles.submit}
+                            onClick={this.loginUser}
                         >
                             Sign In
                         </Button>
