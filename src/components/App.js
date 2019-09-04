@@ -6,6 +6,7 @@ import Login from "./login/userLogin";
 import Register from "./register/userRegister";
 import {mapHome} from "./map/mapHome";
 import {history} from "../_helpers/history";
+import Cards from "./cards/card";
 import {GoogleApiWrapper, Map, Marker} from "google-maps-react";
 import Booking from "./booking/userBooking";
 
@@ -14,20 +15,22 @@ export class App extends React.Component {
       return (
           <div>
               <MenuAppBar/>
-              {/*<Map*/}
-                  {/*google={this.props.google}*/}
-                  {/*zoom={8}*/}
-                  {/*style={mapStyles}*/}
-                  {/*initialCenter={{lat: -37.8083605, lng: 144.9646012}}*/}
-              {/*>*/}
-                  {/*<Marker position={{ lat: -37.8083605, lng: 144.9646012}}/>*/}
-              {/*</Map>*/}
+              {/* <Map
+                  google={this.props.google}
+                  zoom={8}
+                  style={mapStyles}
+                  initialCenter={{lat: -37.8083605, lng: 144.9646012}}
+              >
+                  <Marker position={{ lat: -37.8083605, lng: 144.9646012}}/>
+              </Map> */}
+              <Cards/>
               <Router history={history}>
                   <div className="App-body">
                       <Route path="/map" component={mapHome}/>
                       <Route path="/login" component={Login}/>
                       <Route path="/register" component={Register}/>
                       <Route path="/booking" component={Booking}/>
+                      {/* <Route path="/cards" component={Cards}/> */}
                   </div>
               </Router>
           </div>
@@ -36,7 +39,7 @@ export class App extends React.Component {
 }
 
 const mapStyles = {
-    width: '100%',
+    width: '75%',
     height: '100%',
 };
 

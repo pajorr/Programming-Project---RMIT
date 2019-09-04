@@ -17,6 +17,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Button from '@material-ui/core/Button';
+import { white } from 'ansi-colors';
+import styling from './MenuAppBar.css';
 
 const drawerWidth = 240;
 
@@ -41,6 +44,7 @@ const useStyles = makeStyles(theme => ({
     },
     menuButton: {
         marginRight: theme.spacing(2),
+        backgroundColor: white,
     },
     hide: {
         display: 'none',
@@ -111,7 +115,9 @@ export default function PersistentDrawerLeft() {
                     </IconButton>
                     <Typography variant="h6" noWrap>
                         GoCar
+
                     </Typography>
+                    <button className={styling.ButtonOne}>hi</button>
                 </Toolbar>
             </AppBar>
             <Drawer
