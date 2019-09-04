@@ -23,14 +23,14 @@ export class App extends React.Component {
               >
                   <Marker position={{ lat: -37.8083605, lng: 144.9646012}}/>
               </Map> */}
-              <Cards/>
+              {/* <Cards/> */}
               <Router history={history}>
                   <div className="App-body">
                       <Route path="/map" component={mapHome}/>
                       <Route path="/login" component={Login}/>
                       <Route path="/register" component={Register}/>
                       <Route path="/booking" component={Booking}/>
-                      {/* <Route path="/cards" component={Cards}/> */}
+                      <Route path="/cards" component={Cards}/>
                   </div>
               </Router>
           </div>

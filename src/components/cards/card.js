@@ -15,6 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -42,12 +43,16 @@ const useStyles = makeStyles(theme => ({
 
 
 
-class RecipeReviewCard extends React.Component {
+class CarReviewCard extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             expanded: false,
+            carList: [],
+            loading: true,
+            selectedCar: {}
+            
         }
         this.handleExpandClick = this.handleExpandClick.bind(this);
     }
@@ -62,7 +67,7 @@ class RecipeReviewCard extends React.Component {
 
   getCar() {
       
-    fetch('http://157.230.244.234/api/cars', {
+    fetch('http://157.230.244.234/api/cars/', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -72,14 +77,27 @@ class RecipeReviewCard extends React.Component {
         .then(data => {
             const carData = JSON.stringify(data);
             const obj = JSON.parse(carData);
+            // const resp =  axios.get(`http://157.230.244.234/api/cars/1`);
             this.setState({...this.state.carList, carList: obj}); //how to set a state value
-            console.log(this.state.carList);
+            // this.setState({...this.state.carList, selectedCar: obj})
+            console.log(this.state.selectedCar);
             this.setState({data, loading: false});
         })
         .catch(err => console.log(err));
 };
 
+    componentDidMount() {
+        this.getCar();
+    }
+
+    renderCarList() {
+        return this.state.carList.map(obj => (<h1>{obj.id}</h1>));
+    }
 render() {
+
+if(this.state.loading) {
+        return 'Loading...'
+}
   return (
     <Card className={useStyles.card}>
       <CardHeader
@@ -93,7 +111,7 @@ render() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
+        title = {this.state.carList.id}
         subheader="September 14, 2016"
       />
       <CardMedia
@@ -149,6 +167,7 @@ render() {
           </Typography>
           <Typography>
             Set aside off of the heat to let rest for 10 minutes, and then serve.
+            {this.renderCarList()}
           </Typography>
         </CardContent>
       </Collapse>
@@ -157,4 +176,4 @@ render() {
         }
 }
 
-export default RecipeReviewCard;
+export default CarReviewCard;
