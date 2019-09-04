@@ -142,7 +142,7 @@ class Booking extends React.Component {
                             <Grid item xs={12}>
                                 <FormControl variant="outlined">
                                     <InputLabel htmlFor="outline-aged-simple">
-                                        Age
+                                        Car
                                     </InputLabel>
                                     <Select
                                         value={this.state.carSelected}

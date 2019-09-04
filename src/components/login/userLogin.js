@@ -114,16 +114,18 @@ class Login extends React.Component {
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
-                        <Button
-                            type="button"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={useStyles.submit}
-                            onClick={this.loginUser}
-                        >
-                            Sign In
-                        </Button>
+                        <Link href="#" to="/">
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={useStyles.submit}
+                                onClick={this.loginUser}
+                            >
+                                Sign In
+                            </Button>
+                        </Link>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
