@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Booked;
+use App\ReturnCar;
 use App\Car;
 
-class BookedController extends Controller
+class ReturnCarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,8 @@ class BookedController extends Controller
      */
     public function index()
     {
-        return Booked::all();
+        return ReturnCar::all();
     }
-
-    
 
     /**
      * Store a newly created resource in storage.
@@ -28,12 +26,11 @@ class BookedController extends Controller
      */
     public function store(Request $request)
     {
-        
-       try{
+        try{
 
             $getDate = date("Y-m-d");
 
-            if($request->book_date < $getDate){
+            if($request->date_return < $getDate){
                 return response([
                     "please fill the right date",
                 ]);
@@ -41,17 +38,17 @@ class BookedController extends Controller
 
             $var = Car::findOrFail($request->car_id);
 
-            if($var->taken == false && $request->user_id != NULL && $request->car_id != NULL && $request->book_date != NULL){
+            if($var->taken == true && $request->user_id != NULL && $request->car_id != NULL && $request->date_return != NULL){
 
                 $newData = [
                 'user_id' => $request->user_id,
                 'car_id' => $request->car_id,
-                'book_date' => $request->book_date,
+                'date_return' => $request->date_return,
                 ];
 
-                $fill = Booked::create($newData);
+                $fill = ReturnCar::create($newData);
 
-                $var->taken = true;
+                $var->taken = false;
                 $var->save();
 
 
@@ -61,7 +58,7 @@ class BookedController extends Controller
                 ]);
             }else{
                 return response([
-                    "Failed, car has been booked"
+                    "Failed, you cannot return an unbooked car"
                 ]);
             }
 
@@ -82,27 +79,22 @@ class BookedController extends Controller
      */
     public function show($id)
     {
+        
         try{
             
-            //$var = Booked::select('cars.car_name', 'cars.id')->leftjoin('cars','cars.id','=','books.car_id')->where('id', $id);
-            $var = Booked::where('bookeds.id', $id)
-            ->leftjoin('cars', 'bookeds.car_id', '=', 'cars.id')
-            ->leftjoin('users', 'bookeds.user_id', '=', 'users.id')
-            ->select('bookeds.id', 'users.name', 'cars.car_name', 'cars.car_type', 'bookeds.book_date')->first();
-            //$var = Booked::leftjoin('cars','cars.id','=', 'books.car_id')->select('cars.*')->where('books.id', $id)->first();
+            $var = ReturnCar::where('user_id',$id)->first();
             return response([
-                'booked' => $var
+                'return' => $var
             ]);
         }catch(\Exception $e){
             return response([
                 $e->getMessage()
             ]);
         }
-
     }
 
-   
-    /**   
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -122,8 +114,8 @@ class BookedController extends Controller
      */
     public function destroy($id)
     {
-        try{
-            $var = Booked::findOrFail($id);
+         try{
+            $var = ReturnCar::findOrFail($id);
             if(isset($var)){
                 $var->delete();
                 return response()->json([
@@ -134,6 +126,4 @@ class BookedController extends Controller
             return $e->getMessage();
         }
     }
-
-   
 }

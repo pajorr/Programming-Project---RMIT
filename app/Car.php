@@ -17,4 +17,10 @@ class Car extends Model
      public function bookeds(){
     	return $this->hasOne('App\Booked', 'car_id');
     }
+
+    public function returnCars(){
+    	return $this->hasOne('App\ReturnCar', 'car_id');
+    }
+
+    
 }

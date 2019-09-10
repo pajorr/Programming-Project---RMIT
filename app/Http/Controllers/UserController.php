@@ -14,6 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        //return User::all()->where('email','kentang@gmail.com')->select('id','name')->get();
+        //return User::select('id', 'name')->where('email','kentang@gmail.com')->get();
         return User::all();
     }
 

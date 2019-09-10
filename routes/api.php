@@ -25,10 +25,11 @@ Route::post('register', 'AuthController@register');
 Route::apiResources([
     'users' => 'UserController',
     'cars' => 'CarController',
-    'books' => 'BookedController'
+    'books' => 'BookedController',
+    'returncars' => 'ReturnCarController'
 ]);
 
-Route::group(['middleware' => ['jwt.auth']], function() {
+Route::group(['middleware' => ['jwt.auth','cors']], function() {
     Route::get('logout', 'AuthController@logout');
 	Route::get('testclosed', 'TestController@closed');  
 	Route::get('refreshtoken', 'AuthController@refreshtoken');	
