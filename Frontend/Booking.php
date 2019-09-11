@@ -34,7 +34,7 @@ function changeImage()
 <script>
 function changeText()
 {
-    document.getElementById("demo").innerHTML = "Hello World";
+    document.getElementById("demo").innerHTML = "Hello World.";
 }
 </script>
 </body>
