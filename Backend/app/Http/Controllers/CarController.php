@@ -14,8 +14,10 @@ class CarController extends Controller
      */
     public function index()
     {
+        //$allCar = Car::select('car_name', 'car_type', 'plate_number', 'fuel', 'taken')->get();
         $allCar = Car::all();
         return $allCar;
+     
     }
 
     /**
