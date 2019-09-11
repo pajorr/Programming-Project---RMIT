@@ -8,6 +8,8 @@ import {mapHome} from "./map/mapHome";
 import {history} from "../_helpers/history";
 import {GoogleApiWrapper, Map, Marker} from "google-maps-react";
 import Booking from "./booking/userBooking";
+import paypal from "./payment/paypal";
+import StaffRegister from "./register/staffRegister";
 
 export class App extends React.Component {
   render() {
@@ -28,6 +30,8 @@ export class App extends React.Component {
                       <Route path="/login" component={Login}/>
                       <Route path="/register" component={Register}/>
                       <Route path="/booking" component={Booking}/>
+                      <Route path="/paypal" component ={paypal}/>
+                      <Route path="/staffregister" component={StaffRegister}/>
                   </div>
               </Router>
           </div>
