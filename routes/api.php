@@ -29,7 +29,7 @@ Route::apiResources([
     'returncars' => 'ReturnCarController'
 ]);
 
-Route::group(['middleware' => ['jwt.auth','cors']], function() {
+Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('logout', 'AuthController@logout');
 	Route::get('testclosed', 'TestController@closed');  
 	Route::get('refreshtoken', 'AuthController@refreshtoken');	
