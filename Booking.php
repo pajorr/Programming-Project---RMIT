@@ -2,7 +2,7 @@
 <html>
 
 <body>
-<select id="car" style="width: 200px;" onchange="changeImage();">
+<select id="car" style="width: 200px;" onchange="changeImage(); changeText();">
     <option value="avatar">Me</option>
     <option value="maruti-suzuki-alto-800">Maruti Suzuki Alto 800</option>
     <option value="hyundai-grand-i10">Hyundai Grand i10</option>
@@ -18,16 +18,24 @@
     <option value="audi-a3-cabriolet">Audi A3 Cabriolet</option>
 </select>
 <img id="image" src="../../media/avatar.png" width="250" height="250" />
+<button onclick="changeText();">Test Button</button>
+<p id="demo">Test</p>
+
 <script> 
 
 function changeImage()
 {
-var img = document.getElementById("image");
-var imgsrc=document.getElementById("car").value + '.png';
-img.src=imgsrc;
-return false;
+    var img = document.getElementById("image");
+    var imgsrc=document.getElementById("car").value + '.png';
+    img.src=imgsrc;
+    return false;
 }
-
+</script>
+<script>
+function changeText()
+{
+    document.getElementById("demo").innerHTML = "Hello World";
+}
 </script>
 </body>
 
