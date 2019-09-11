@@ -68,7 +68,7 @@ class CarReviewCard extends React.Component {
 
   getCar() {
       
-    fetch('http://157.230.244.234/api/cars/1', {
+    fetch('http://157.230.244.234/api/cars', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
