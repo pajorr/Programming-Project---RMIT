@@ -69,7 +69,8 @@ class AuthController extends Controller
             ], 500);
         }
         // All good so return the token
-        $var = User::select('id', 'name')->where('email', $request->email)->get();
+        $var = User::select('id', 'name')->where('email', $request->email)->first();
+        
         
 
         return response()->json([
