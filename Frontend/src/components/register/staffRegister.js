@@ -36,6 +36,39 @@ const useStyles = makeStyles(theme => ({
 }));
 
 class StaffRegister extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            name: {},
+            email: {},
+            password: {}
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.registerStaff = this.registerStaff.bind(this);
+    }
+
+    registerStaff() {
+        fetch('http://157.230.244.234/api/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password
+            })
+        }).then(res => res.json())
+            .catch(err => console.log(err));
+    };
+
+    handleChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
     render() {
         return(
             <Container component="main" maxWidth="xs">
@@ -52,35 +85,35 @@ class StaffRegister extends React.Component {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     autoComplete="fname"
-                                    name="firstName"
+                                    name="name"
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="firstName"
                                     label="First Name"
                                     autoFocus
+                                    onChange={this.handleChange}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="lname"
-                                />
-                            </Grid>
+                            {/*<Grid item xs={12} sm={6}>*/}
+                            {/*<TextField*/}
+                            {/*variant="outlined"*/}
+                            {/*required*/}
+                            {/*fullWidth*/}
+                            {/*id="lastName"*/}
+                            {/*label="Last Name"*/}
+                            {/*name="lastName"*/}
+                            {/*autoComplete="lname"*/}
+                            {/*/>*/}
+                            {/*</Grid>*/}
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="email"
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    onChange={this.handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -91,8 +124,8 @@ class StaffRegister extends React.Component {
                                     name="password"
                                     label="Password"
                                     type="password"
-                                    id="password"
                                     autoComplete="current-password"
+                                    onChange={this.handleChange}
                                 />
                             </Grid>
                             {/*<Grid item xs={12}>*/}
@@ -103,18 +136,19 @@ class StaffRegister extends React.Component {
                             {/*</Grid>*/}
                         </Grid>
                         <Button
-                            type="submit"
+                            type="button"
                             fullWidth
                             variant="contained"
                             color="primary"
                             className={useStyles.submit}
+                            onClick={this.registerStaff}
                         >
                             Sign Up
                         </Button>
                         <Grid container justify="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                    Already have an account? Sign in
+                                <Link href="#" variant="body2" to="/login">
+                                    {"Already have an account? Sign in"}
                                 </Link>
                             </Grid>
                         </Grid>
