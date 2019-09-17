@@ -45,13 +45,16 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
         padding: theme.spacing(6)
     },
+    gridDirection: {
+        direction : 'column'
+    }
 }));
 
 export class mapHome extends React.Component {
     render() {
 
 
-        const cards = [1, 2, 3];
+        const cards = [1, 2, 3, 4];
         return(
             <React.Fragment>
                 <CssBaseline />
@@ -59,13 +62,11 @@ export class mapHome extends React.Component {
                     {/* Hero unit */}
                     <div className={useStyles.heroContent}>
                         <Container maxWidth="sm">
-                            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                                GoCar
-                            </Typography>
+                            {/*<Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>*/}
+                                {/*GoCar*/}
+                            {/*</Typography>*/}
                             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                                Something short and leading about the collection below—its contents, the creator, etc.
-                                Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-                                entirely.
+                                Get a ride with Us.
                             </Typography>
                             <div className={useStyles.heroButtons}>
                                 <Grid container spacing={2} justify="center">
@@ -87,23 +88,30 @@ export class mapHome extends React.Component {
                             </div>
                         </Container>
                     </div>
-                    <Container className={useStyles.cardGrid} maxWidth="md">
+                    <Container className={useStyles.cardGrid} maxWidth="100%">
                         {/* End hero unit */}
-                        <Grid container spacing={4}>
-                            {cards.map(card => (
+                        <Grid container spacing={2} className={useStyles.gridDirection} marginRight="200px">
+                            <Grid item xs={12} sm={6} md={4}>
+                                <Map
+                                    google={this.props.google}
+                                    zoom={8}
+                                    style={mapStyles}
+                                    initialCenter={{lat: -37.8083605, lng: 144.9646012}}
+                                >
+                                    <Marker position={{ lat: -37.8083605, lng: 144.9646012}}/>
+                                </Map>
+                            </Grid>
+                        </Grid>
+                        {cards.map(card => (
+                            <Grid container spacing={2} className={useStyles.gridDirection}  alignItems="flex-start" justify="flex-end">
                                 <Grid item key={card} xs={12} sm={6} md={4}>
-                                    <Card className={useStyles.card}>
-                                        <CardMedia
-                                            className={useStyles.cardMedia}
-                                            image="https://source.unsplash.com/random"
-                                            title="Image title"
-                                        />
+                                    <Card className={useStyles.card} style={{width: '90%', marginLeft:'50px'}}>
                                         <CardContent className={useStyles.cardContent}>
                                             <Typography gutterBottom variant="h5" component="h2">
-                                                Heading
+                                                Car
                                             </Typography>
                                             <Typography>
-                                                This is a media card. You can use this section to describe the content.
+                                                This is a media card.
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
@@ -111,22 +119,15 @@ export class mapHome extends React.Component {
                                                 View
                                             </Button>
                                             <Button size="small" color="primary">
-                                                Edit
+                                                Book
                                             </Button>
                                         </CardActions>
                                     </Card>
                                 </Grid>
-                            ))}
+
                         </Grid>
+                        ))}
                     </Container>
-                    <Map
-                        google={this.props.google}
-                        zoom={8}
-                        style={mapStyles}
-                        initialCenter={{lat: -37.8083605, lng: 144.9646012}}
-                    >
-                        <Marker position={{ lat: -37.8083605, lng: 144.9646012}}/>
-                    </Map>
                 </main>
                 {/* Footer */}
                 {/*<footer className={useStyles.footer}>*/}
@@ -145,11 +146,8 @@ export class mapHome extends React.Component {
 
 
 const mapStyles = {
-    width: '80%',
+    width: '65%',
     height: '80%',
-    marginLeft: '150px',
-    marginTop: '20px',
-    marginBottom: '200px'
 };
 
 export default GoogleApiWrapper({

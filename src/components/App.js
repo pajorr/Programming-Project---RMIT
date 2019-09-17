@@ -10,6 +10,7 @@ import {GoogleApiWrapper, Map, Marker} from "google-maps-react";
 import Booking from "./booking/userBooking";
 import paypal from "./payment/paypal";
 import StaffRegister from "./register/staffRegister";
+import StaffLogin from "./login/staffLogin";
 
 export class App extends React.Component {
   render() {
@@ -32,6 +33,7 @@ export class App extends React.Component {
                       <Route path="/booking" component={Booking}/>
                       <Route path="/paypal" component ={paypal}/>
                       <Route path="/staffregister" component={StaffRegister}/>
+                      <Route path="/stafflogin" component={StaffLogin}/>
                   </div>
               </Router>
           </div>

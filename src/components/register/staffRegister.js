@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -50,7 +50,7 @@ class StaffRegister extends React.Component {
     }
 
     registerStaff() {
-        fetch('http://157.230.244.234/api/', {
+        fetch('http://157.230.244.234/api/staffregister', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -78,7 +78,7 @@ class StaffRegister extends React.Component {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign up
+                        Staff Sign up
                     </Typography>
                     <form className={useStyles.form} noValidate>
                         <Grid container spacing={2}>
