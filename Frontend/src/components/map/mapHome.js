@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link} from 'react-router-dom';
+import carIcon from './../../rsc/topcar.png';
 
 const useStyles = makeStyles(theme => ({
     icon: {
@@ -90,6 +91,7 @@ export class mapHome extends React.Component {
                     </div>
                     <Container className={useStyles.cardGrid} maxWidth="100%">
                         {/* End hero unit */}
+                        {/* start maps */}
                         <Grid container spacing={2} className={useStyles.gridDirection} marginRight="200px">
                             <Grid item xs={12} sm={6} md={4}>
                                 <Map
@@ -98,7 +100,38 @@ export class mapHome extends React.Component {
                                     style={mapStyles}
                                     initialCenter={{lat: -37.8083605, lng: 144.9646012}}
                                 >
-                                    <Marker position={{ lat: -37.8083605, lng: 144.9646012}}/>
+                                    <Marker
+                                        position={{ lat: -37.8083605, lng: 144.9646012}}
+                                        icon={{
+                                            url: carIcon,
+                                            anchor: new this.props.google.maps.Point(9,19),
+                                            scaledSize: new this.props.google.maps.Size(18,38)
+                                        }}
+                                    />
+                                    <Marker
+                                        position={{ lat: -37.7083605, lng: 144.8646012}}
+                                        icon={{
+                                            url: carIcon,
+                                            anchor: new this.props.google.maps.Point(9,19),
+                                            scaledSize: new this.props.google.maps.Size(18,38)
+                                        }}
+                                    />
+                                    <Marker
+                                        position={{ lat: -37.9083605, lng: 145.1006012}}
+                                        icon={{
+                                            url: carIcon,
+                                            anchor: new this.props.google.maps.Point(9,19),
+                                            scaledSize: new this.props.google.maps.Size(18,38)
+                                        }}
+                                    />
+                                    <Marker
+                                        position={{ lat: -37.5883605, lng: 145.1006012}}
+                                        icon={{
+                                            url: carIcon,
+                                            anchor: new this.props.google.maps.Point(9,19),
+                                            scaledSize: new this.props.google.maps.Size(18,38)
+                                        }}
+                                    />
                                 </Map>
                             </Grid>
                         </Grid>
