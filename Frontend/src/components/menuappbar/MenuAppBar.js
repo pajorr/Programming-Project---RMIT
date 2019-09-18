@@ -17,6 +17,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Button from "@material-ui/core/Button/Button";
+import {Link} from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -109,9 +111,15 @@ export default function PersistentDrawerLeft() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap>
+                    <Typography variant="h6" noWrap  style={{flex: 1}}>
                         GoCar
                     </Typography>
+
+                    <Link href="#" to="/login">
+                        <Button variant="contained" color="primary">
+                            Login
+                        </Button>
+                    </Link>
                 </Toolbar>
             </AppBar>
             <Drawer

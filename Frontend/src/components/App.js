@@ -16,7 +16,9 @@ export class App extends React.Component {
   render() {
       return (
           <div>
-              <MenuAppBar/>
+              <Router history={history}>
+                <MenuAppBar/>
+              </Router>
               {/*<Map*/}
                   {/*google={this.props.google}*/}
                   {/*zoom={8}*/}
