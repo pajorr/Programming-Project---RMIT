@@ -19,14 +19,6 @@ export class App extends React.Component {
               <Router history={history}>
                 <MenuAppBar/>
               </Router>
-              {/*<Map*/}
-                  {/*google={this.props.google}*/}
-                  {/*zoom={8}*/}
-                  {/*style={mapStyles}*/}
-                  {/*initialCenter={{lat: -37.8083605, lng: 144.9646012}}*/}
-              {/*>*/}
-                  {/*<Marker position={{ lat: -37.8083605, lng: 144.9646012}}/>*/}
-              {/*</Map>*/}
               <Router history={history}>
                   <div className="App-body">
                       <Route exact path="/" component={mapHome}/>

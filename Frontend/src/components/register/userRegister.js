@@ -76,22 +76,19 @@ class Register extends React.Component {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={useStyles.paper}>
-                    <Avatar className={useStyles.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
                     <form className={useStyles.form} noValidate>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextField
                                     autoComplete="fname"
                                     name="name"
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    label="First Name"
+                                    label="Name"
                                     autoFocus
                                     onChange={this.handleChange}
                                 />
@@ -136,22 +133,23 @@ class Register extends React.Component {
                                     {/*label="I want to receive inspiration, marketing promotions and updates via email."*/}
                                 {/*/>*/}
                             {/*</Grid>*/}
-                        </Grid>
-                        <Button
-                            type="button"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={useStyles.submit}
-                            onClick={this.registerUser}
-                        >
-                            Sign Up
-                        </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link href="#" variant="body2" to="/login">
-                                    {"Already have an account? Sign in"}
-                                </Link>
+
+                            <Button
+                                type="button"
+                                fullWidth
+                                variant="contained"
+                                className={useStyles.submit}
+                                onClick={this.registerUser}
+                            >
+                                Sign Up
+                            </Button>
+
+                            <Grid container justify="flex-end">
+                                <Grid item>
+                                    <Link href="#" variant="body2" to="/login">
+                                        {"Already have an account? Sign in"}
+                                    </Link>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </form>

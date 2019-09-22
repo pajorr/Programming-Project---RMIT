@@ -25,13 +25,14 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
-        marginBottom: '100px'
+        marginBottom: '80px'
     },
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
+        background: "#00c853"
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -40,6 +41,13 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
         }),
+    },
+    loginButton: {
+      background: "#2e7d32",
+        color: "#ffffff",
+    },
+    loginLink: {
+      underline: "none",
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -92,6 +100,43 @@ export default function PersistentDrawerLeft() {
         setOpen(false);
     }
 
+    function handleLoggedIn() {
+        if(localStorage.getItem("token") != null) {
+            return (
+                <Link to="/" className={classes.loginLink} style={{textDecorationLine: 'none'}}>
+                    <Button variant="contained" className={classes.loginButton} onClick={logoutButtonClick}>
+                        Logout
+                    </Button>
+                </Link>
+            )
+        } else {
+            return (
+                <Link to="/login" className={classes.loginLink} style={{textDecorationLine: 'none'}}>
+                    <Button variant="contained" className={classes.loginButton}>
+                        Login
+                    </Button>
+                </Link>
+            )
+        }
+    }
+
+    function handleSidebarLoggedIn() {
+        if(localStorage.getItem("token") != null) {
+            return(
+                <List>
+                    <ListItem>
+                        {localStorage.getItem("token")}
+                    </ListItem>
+                </List>
+            )
+        } else {}
+    }
+
+    function logoutButtonClick() {
+        localStorage.removeItem("token");
+        window.location.reload();
+    }
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -112,14 +157,11 @@ export default function PersistentDrawerLeft() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap  style={{flex: 1}}>
-                        GoCar
+                        <Link to="/" style={{textDecoration: 'none', color: '#ffffff'}}>
+                            GoCar
+                        </Link>
                     </Typography>
-
-                    <Link href="#" to="/login">
-                        <Button variant="contained" color="primary">
-                            Login
-                        </Button>
-                    </Link>
+                    {handleLoggedIn()}
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -137,14 +179,7 @@ export default function PersistentDrawerLeft() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>
-                    {['Item 1', 'Item 2', 'Item 3', 'Item 4'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
+                {handleSidebarLoggedIn()}
                 <Divider />
                 <List>
                     {['Item 1', 'Item 2', 'Item 3'].map((text, index) => (
