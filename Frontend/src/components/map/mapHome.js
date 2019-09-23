@@ -166,7 +166,7 @@ export class mapHome extends React.Component {
                                 initialCenter={{lat: -37.8083605, lng: 144.9646012}}
                             >
                                 <Marker
-                                    position={{ lat: -37.8083605, lng: 144.9646012}}
+                                        position={{ lat: -37.8083605, lng: 144.9646012}}
                                     icon={{
                                         url: carIcon,
                                         anchor: new this.props.google.maps.Point(9,19),
@@ -212,7 +212,7 @@ export class mapHome extends React.Component {
                         </Container>
                         <footer className={style.footer} style={{paddingBottom: 20}}>
                             <Container maxWidth="sm">
-                                <Typography variant="body1">RMITⒸ</Typography>
+                                <Typography variant="body1">RMITⒸ Adrian, Ayrton, Dylan, Yonas</Typography>
                             </Container>
                         </footer>
                     </div>

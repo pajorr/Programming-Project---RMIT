@@ -134,15 +134,19 @@ class Register extends React.Component {
                                 {/*/>*/}
                             {/*</Grid>*/}
 
-                            <Button
-                                type="button"
-                                fullWidth
-                                variant="contained"
-                                className={useStyles.submit}
-                                onClick={this.registerUser}
-                            >
-                                Sign Up
-                            </Button>
+                            <Grid item xs={12}>
+                                <Link to="/login">
+                                    <Button
+                                        type="button"
+                                        fullWidth
+                                        variant="contained"
+                                        className={useStyles.submit}
+                                        onClick={this.registerUser}
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </Link>
+                            </Grid>
 
                             <Grid container justify="flex-end">
                                 <Grid item>

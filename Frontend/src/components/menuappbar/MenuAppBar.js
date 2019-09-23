@@ -125,6 +125,8 @@ export default function PersistentDrawerLeft() {
             return(
                 <List>
                     <ListItem>
+                        Logged in as: {localStorage.getItem("userName")}
+                        <br/>
                         {localStorage.getItem("token")}
                     </ListItem>
                 </List>
@@ -182,12 +184,12 @@ export default function PersistentDrawerLeft() {
                 {handleSidebarLoggedIn()}
                 <Divider />
                 <List>
-                    {['Item 1', 'Item 2', 'Item 3'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
+                    <Link to="/mybookings">
+                        <ListItem button>
+                            <ListItemIcon><MailIcon/></ListItemIcon>
+                            <ListItemText primary={"My Bookings"}/>
                         </ListItem>
-                    ))}
+                    </Link>
                 </List>
             </Drawer>
         </div>

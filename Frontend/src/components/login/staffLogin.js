@@ -7,35 +7,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-const useStyles = makeStyles(theme => ({
-    '@global': {
-        body: {
-            backgroundColor: theme.palette.common.white,
-        },
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
+import useStyles from './userLogin.css';
 
 class Login extends React.Component {
 
@@ -48,10 +23,10 @@ class Login extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.loginStaff = this.loginStaff.bind(this);
+        this.loginUser = this.loginUser.bind(this);
     }
 
-    loginStaff() {
+    loginUser() {
         return fetch('http://157.230.244.234/api/stafflogin', {
             method: 'POST',
             headers: {
@@ -66,7 +41,10 @@ class Login extends React.Component {
             return response.json();
         }).then(token => {
             const tokenString = JSON.stringify(token);
-            localStorage.setItem("token", JSON.parse(tokenString).data.token);
+            // localStorage.setItem("stafftoken", JSON.parse(tokenString).data.token);
+            // localStorage.setItem("staffid", JSON.parse(tokenString).data.user.id);
+            // change BE to respond with staff details
+            window.location.reload();
         })
     };
 
@@ -79,9 +57,6 @@ class Login extends React.Component {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={useStyles.paper}>
-                    <Avatar className={useStyles.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
                     <Typography component="h1" variant="h5">
                         Staff Sign in
                     </Typography>
@@ -96,6 +71,7 @@ class Login extends React.Component {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            style={{borderColor: "#00c853 !important"}}
                             onChange={this.handleChange}
                         />
                         <TextField
@@ -110,26 +86,16 @@ class Login extends React.Component {
                             autoComplete="current-password"
                             onChange={this.handleChange}
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button component={Link} to="/"
+                        <Button component={Link} to="/staff"
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                color="primary"
                                 className={useStyles.submit}
-                                onClick={this.loginStaff}
+                                onClick={this.loginUser}
                         >
                             Sign In
                         </Button>
                         <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
                             <Grid item>
                                 <Link href="#" variant="body2" to="/staffregister">
                                     {"Don't have an account? Sign Up"}

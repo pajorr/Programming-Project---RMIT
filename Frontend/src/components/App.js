@@ -11,8 +11,15 @@ import Booking from "./booking/userBooking";
 import paypal from "./payment/paypal";
 import StaffRegister from "./register/staffRegister";
 import StaffLogin from "./login/staffLogin";
+import StaffLanding from "./landing/staffLanding";
+import StaffBooking from "./staff/staffBooking";
+import StaffUserList from "./staff/staffUserList";
+import StaffCarList from "./staff/staffCarList";
+import MyBooking from "./booking/userMyBookings";
+import StaffCarAdd from "./staff/staffCarAdd";
 
 export class App extends React.Component {
+
   render() {
       return (
           <div>
@@ -26,6 +33,12 @@ export class App extends React.Component {
                       <Route path="/register" component={Register}/>
                       <Route path="/staffregister" component={StaffRegister}/>
                       <Route path="/stafflogin" component={StaffLogin}/>
+                      <Route path="/staff" component={StaffLanding}/>
+                      <Route path="/staffbooking" component={StaffBooking}/>
+                      <Route path="/staffuserlist" component={StaffUserList}/>
+                      <Route path="/staffcarlist" component={StaffCarList}/>
+                      <Route path="/mybookings" component={MyBooking}/>
+                      <Route path="/staffaddcar" component={StaffCarAdd}/>
                   </div>
               </Router>
           </div>
