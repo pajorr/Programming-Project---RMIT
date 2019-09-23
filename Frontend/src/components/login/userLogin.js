@@ -42,6 +42,7 @@ class Login extends React.Component {
         }).then(token => {
             const tokenString = JSON.stringify(token);
             localStorage.setItem("token", JSON.parse(tokenString).data.token);
+            localStorage.setItem("userId", JSON.parse(tokenString).data.user.id);
             window.location.reload();
         })
     };

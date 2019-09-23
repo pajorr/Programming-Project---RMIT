@@ -17,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Paypal from './../payment/paypal';
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -52,7 +53,8 @@ class Booking extends React.Component {
             carList: [],
             carSelected: '',
             loading: true,
-            userId: ''
+            userId: '',
+            paid: ""
         };
 
         this.getCar = this.getCar.bind(this);
@@ -87,6 +89,7 @@ class Booking extends React.Component {
     }
 
     bookCar() {
+
         fetch('http://157.230.244.234/api/books', {
             method: 'POST',
             headers: {
@@ -96,18 +99,57 @@ class Booking extends React.Component {
             body: JSON.stringify({
                 user_id: this.state.userId,
                 car_id: this.state.carSelected,
-                book_date: '2019-09-03' //change to proper date
+                book_date: '2019-09-24', //change this
+                duration: '5' //and this
             })
         }).then(res => res.json())
             .catch(err => console.log(err));
+
+        setTimeout(() => {
+            this.setState({...this.state.carSelected, carSelected: ""});
+            window.location.reload();
+        }, 5000);
     }
 
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     };
 
+    ButtonPaidCheck() {
+        if(this.state.paid !== "") {
+            return(
+                <Button
+                    type="button"
+                    fullWidth
+                    variant="contained"
+                    className={useStyles.submit}
+                    onClick={() => this.bookCar()}
+                >
+                    Book
+                </Button>
+            )
+        } else {
+            return(
+                <Button
+                    type="button"
+                    fullWidth
+                    variant="contained"
+                    className={useStyles.submit}
+                    disabled
+                    onClick={() => this.bookCar()}
+                >
+                    Book
+                </Button>
+            )
+        }
+    }
+
     componentDidMount() {
         this.getCar();
+        console.log(this.props.data);
+
+        this.setState({...this.state.carSelected, carSelected: this.props.data});
+        this.setState({...this.state.userId, userId: localStorage.getItem("userId")});
     }
 
     render() {
@@ -136,37 +178,34 @@ class Booking extends React.Component {
                                     fullWidth
                                     label="User ID"
                                     autoFocus
-                                    onChange={this.handleChange}
+                                    disabled
+                                    value={localStorage.getItem("userId")}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <FormControl variant="outlined">
-                                    <InputLabel htmlFor="outline-aged-simple">
-                                        Car
-                                    </InputLabel>
-                                    <Select
-                                        value={this.state.carSelected}
-                                        onChange={this.handleChange}
-                                        input={<OutlinedInput labelWidth={976} name="carSelected" id="outline-aged-simple"/>}
-                                    >
-                                        <MenuItem>
-                                            <em>None</em>
-                                        </MenuItem>
-                                        {this.renderCarList()}
-                                    </Select>
-                                </FormControl>
+                                <TextField
+                                    autoComplete="fname"
+                                    name="carSelected"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    label="Car Selected"
+                                    autoFocus
+                                    disabled
+                                    value={this.state.carList[this.props.data].car_name}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div onClick={() => this.setState({...this.state.paid, paid: "paid"})}> /*fix this*/
+                                    <Paypal />
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Link to="/">
+                                    {this.ButtonPaidCheck()}
+                                </Link>
                             </Grid>
                         </Grid>
-                        <Button
-                            type="button"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={useStyles.submit}
-                            onClick={this.bookCar}
-                        >
-                            Book
-                        </Button>
                     </form>
                 </div>
             </Container>

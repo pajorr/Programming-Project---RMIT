@@ -24,8 +24,6 @@ export class App extends React.Component {
                       <Route exact path="/" component={mapHome}/>
                       <Route path="/login" component={Login}/>
                       <Route path="/register" component={Register}/>
-                      <Route path="/booking" component={Booking}/>
-                      <Route path="/paypal" component ={paypal}/>
                       <Route path="/staffregister" component={StaffRegister}/>
                       <Route path="/stafflogin" component={StaffLogin}/>
                   </div>

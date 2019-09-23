@@ -22,6 +22,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Paper from "@material-ui/core/Paper/Paper";
 import Grid from "@material-ui/core/Grid/Grid";
+import Button from "@material-ui/core/Button/Button";
+import Booking from "./../booking/userBooking";
 
 export class mapHome extends React.Component {
 
@@ -31,10 +33,11 @@ export class mapHome extends React.Component {
             expanded: false,
             carList: [],
             loading: true,
-            selectedCar: {}
-
+            selectedCar: ""
         };
+
         this.handleExpandClick = this.handleExpandClick.bind(this);
+        this.handleSelectCar = this.handleSelectCar.bind(this);
     }
 
     handleExpandClick() {
@@ -46,7 +49,8 @@ export class mapHome extends React.Component {
     }
 
     handleSelectCar(car) {
-        return this.state.carList.findIndex(obj => obj.car_name === car);
+        this.setState({...this.state.selectedCar, selectedCar: this.state.carList.findIndex(obj => obj.car_name === car)});
+        this.renderBookingForm();
     }
 
     getCar() {
@@ -71,6 +75,7 @@ export class mapHome extends React.Component {
 
     componentDidMount() {
         this.getCar();
+        console.log(this.state.selectedCar);
     }
 
     renderCarList() {
@@ -115,6 +120,7 @@ export class mapHome extends React.Component {
                             updated_at: {obj.updated_at}
                             <br/>
                         </Typography>
+                        <Button onClick={() => this.handleSelectCar(obj.car_name) /*this is how you properly fire a button method*/}>Book</Button>
                     </CardContent>
                     <CardActions disableSpacing>
                         <IconButton aria-label="add to favorites">
@@ -140,73 +146,85 @@ export class mapHome extends React.Component {
             ));
     }
 
+    renderBookingForm() {
+        if(this.state.selectedCar !== "") {
+            return (<Booking data={this.state.selectedCar+1}/>)
+        } else {
+            return (
+                <div>
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <div style={{maxHeight: 600, overflow: 'auto', maxWidth: 600}}>
+                                {this.renderCarList()}
+                            </div>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Map
+                                google={this.props.google}
+                                zoom={8}
+                                style={mapStyles}
+                                initialCenter={{lat: -37.8083605, lng: 144.9646012}}
+                            >
+                                <Marker
+                                    position={{ lat: -37.8083605, lng: 144.9646012}}
+                                    icon={{
+                                        url: carIcon,
+                                        anchor: new this.props.google.maps.Point(9,19),
+                                        scaledSize: new this.props.google.maps.Size(18,38)
+                                    }}
+                                />
+                                <Marker
+                                    position={{ lat: -37.7083605, lng: 144.8646012}}
+                                    icon={{
+                                        url: carIcon,
+                                        anchor: new this.props.google.maps.Point(9,19),
+                                        scaledSize: new this.props.google.maps.Size(18,38)
+                                    }}
+                                />
+                                <Marker
+                                    position={{ lat: -37.9083605, lng: 145.1006012}}
+                                    icon={{
+                                        url: carIcon,
+                                        anchor: new this.props.google.maps.Point(9,19),
+                                        scaledSize: new this.props.google.maps.Size(18,38)
+                                    }}
+                                />
+                                <Marker
+                                    position={{ lat: -37.5883605, lng: 145.1006012}}
+                                    icon={{
+                                        url: carIcon,
+                                        anchor: new this.props.google.maps.Point(9,19),
+                                        scaledSize: new this.props.google.maps.Size(18,38)
+                                    }}
+                                />
+                            </Map>
+                        </Grid>
+                    </Grid>
+                    <div className={style.root} style={{background: "linear-gradient(45deg, #00c853 10%, #69f0ae 30%, #b9f6ca 90%)", color: "#fdfdfd", marginTop: "20px"}}>
+                        <Container component="main" className={style.main} maxWidth="sm">
+                            <Typography variant="h2" component="h1" gutterBottom style={{paddingTop: 20}}>
+                                GoCar
+                            </Typography>
+                            <Typography variant="h5" component="h2" gutterBottom>
+                                {'We are your number one solution to ride sharing.'}
+                            </Typography>
+                            <Typography variant="body1">Ride with us now.</Typography>
+                        </Container>
+                        <footer className={style.footer} style={{paddingBottom: 20}}>
+                            <Container maxWidth="sm">
+                                <Typography variant="body1">RMITⒸ</Typography>
+                            </Container>
+                        </footer>
+                    </div>
+                </div>
+            )
+        }
+    }
+
     render() {
         return(
             <div>
-                <Grid container spacing={2}>
-                    <Grid item xs={4}>
-                        <div style={{maxHeight: 600, overflow: 'auto', maxWidth: 600}}>
-                                    {this.renderCarList()}
-                        </div>
-                    </Grid>
-                    <Grid item xs={8}>
-                        <Map
-                            google={this.props.google}
-                            zoom={8}
-                            style={mapStyles}
-                            initialCenter={{lat: -37.8083605, lng: 144.9646012}}
-                        >
-                            <Marker
-                                position={{ lat: -37.8083605, lng: 144.9646012}}
-                                icon={{
-                                    url: carIcon,
-                                    anchor: new this.props.google.maps.Point(9,19),
-                                    scaledSize: new this.props.google.maps.Size(18,38)
-                                }}
-                            />
-                            <Marker
-                                position={{ lat: -37.7083605, lng: 144.8646012}}
-                                icon={{
-                                    url: carIcon,
-                                    anchor: new this.props.google.maps.Point(9,19),
-                                    scaledSize: new this.props.google.maps.Size(18,38)
-                                }}
-                            />
-                            <Marker
-                                position={{ lat: -37.9083605, lng: 145.1006012}}
-                                icon={{
-                                    url: carIcon,
-                                    anchor: new this.props.google.maps.Point(9,19),
-                                    scaledSize: new this.props.google.maps.Size(18,38)
-                                }}
-                            />
-                            <Marker
-                                position={{ lat: -37.5883605, lng: 145.1006012}}
-                                icon={{
-                                    url: carIcon,
-                                    anchor: new this.props.google.maps.Point(9,19),
-                                    scaledSize: new this.props.google.maps.Size(18,38)
-                                }}
-                            />
-                        </Map>
-                    </Grid>
-                </Grid>
-                <div className={style.root} style={{background: "linear-gradient(45deg, #00c853 10%, #69f0ae 30%, #b9f6ca 90%)", color: "#fdfdfd", marginTop: "20px"}}>
-                    <Container component="main" className={style.main} maxWidth="sm">
-                        <Typography variant="h2" component="h1" gutterBottom style={{paddingTop: 20}}>
-                            GoCar
-                        </Typography>
-                        <Typography variant="h5" component="h2" gutterBottom>
-                            {'We are your number one solution to ride sharing.'}
-                        </Typography>
-                        <Typography variant="body1">Ride with us now.</Typography>
-                    </Container>
-                    <footer className={style.footer} style={{paddingBottom: 20}}>
-                        <Container maxWidth="sm">
-                            <Typography variant="body1">RMITⒸ</Typography>
-                        </Container>
-                    </footer>
-                </div>
+                {this.renderBookingForm()}
             </div>
         )
     }
