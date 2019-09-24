@@ -84,7 +84,7 @@ class MyBooking extends React.Component {
                             <ListItemText secondary={"Price: "  + obj.price} />
                             <ListItemText secondary={"Duration: " + obj.duration} />
                             <ListItemText secondary={"Booked By: " + obj.name} />
-                            <Button onClick={() => this.returnCar(/*obj.car_id*/)}>Return</Button>
+                            <Button onClick={() => this.returnCar(obj.car_id)}>Return</Button>
                         </ListItem>
                     </List>
                     <Divider />
