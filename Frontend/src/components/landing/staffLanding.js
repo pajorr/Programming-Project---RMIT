@@ -23,6 +23,12 @@ const styles = theme => ({
 
 class StaffLanding extends React.Component {
 
+    logoutUser() {
+        localStorage.removeItem("stafftoken");
+        localStorage.removeItem("staffid");
+        localStorage.removeItem("staffname");
+    }
+
     render() {
         const { classes } = this.props;
         return(
@@ -73,6 +79,7 @@ class StaffLanding extends React.Component {
                         <Link to={"/"}>
                             <Button
                                 className={classes.buttonStyle}
+                                onClick={() => this.logoutUser()}
                             >
                                 Logout
                             </Button>

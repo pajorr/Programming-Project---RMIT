@@ -50,15 +50,26 @@ class MyBooking extends React.Component {
             .catch(err => console.log(err));
     }
 
-    returnCar(carid) {
-        return fetch('http://157.230.244.234/api/returncars/' + carid, {
+    returnCar(carid, id) {
+        let today = new Date();
+        let date = today.getFullYear()+"-"+("0" + (today.getMonth() + 1)).slice(-2)+"-"+("0" + today.getDate()).slice(-2);
+
+        return fetch('http://157.230.244.234/api/returncars/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+                user_id: localStorage.getItem("userId"),
+                car_id: carid,
+                book_id: id,
+                date_return: date
+            })
         }).then(function res(response) {
             return response.json();
+        }).then(() => {
+            window.location.reload();
         })
     }
 
@@ -84,7 +95,8 @@ class MyBooking extends React.Component {
                             <ListItemText secondary={"Price: "  + obj.price} />
                             <ListItemText secondary={"Duration: " + obj.duration} />
                             <ListItemText secondary={"Booked By: " + obj.name} />
-                            <Button onClick={() => this.returnCar(obj.car_id)}>Return</Button>
+                            <ListItemText secondary={"Returned?: " + obj.returned}/>
+                            <Button onClick={() => this.returnCar(obj.car_id, obj.id)}>Return</Button>
                         </ListItem>
                     </List>
                     <Divider />

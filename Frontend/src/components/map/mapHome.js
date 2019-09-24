@@ -146,6 +146,19 @@ export class mapHome extends React.Component {
             ));
     }
 
+    renderCarMarkers() {
+        return this.state.carList.map(obj => (
+            <Marker
+                position={{ lat: obj.latitude, lng: obj.longitude}}
+                icon={{
+                    url: carIcon,
+                    anchor: new this.props.google.maps.Point(9,19),
+                    scaledSize: new this.props.google.maps.Size(18,38)
+                }}
+            />
+        ))
+    }
+
     renderBookingForm() {
         if(this.state.selectedCar !== "") {
             return (<Booking data={this.state.selectedCar+1}/>)
@@ -165,38 +178,7 @@ export class mapHome extends React.Component {
                                 style={mapStyles}
                                 initialCenter={{lat: -37.8083605, lng: 144.9646012}}
                             >
-                                <Marker
-                                        position={{ lat: -37.8083605, lng: 144.9646012}}
-                                    icon={{
-                                        url: carIcon,
-                                        anchor: new this.props.google.maps.Point(9,19),
-                                        scaledSize: new this.props.google.maps.Size(18,38)
-                                    }}
-                                />
-                                <Marker
-                                    position={{ lat: -37.7083605, lng: 144.8646012}}
-                                    icon={{
-                                        url: carIcon,
-                                        anchor: new this.props.google.maps.Point(9,19),
-                                        scaledSize: new this.props.google.maps.Size(18,38)
-                                    }}
-                                />
-                                <Marker
-                                    position={{ lat: -37.9083605, lng: 145.1006012}}
-                                    icon={{
-                                        url: carIcon,
-                                        anchor: new this.props.google.maps.Point(9,19),
-                                        scaledSize: new this.props.google.maps.Size(18,38)
-                                    }}
-                                />
-                                <Marker
-                                    position={{ lat: -37.5883605, lng: 145.1006012}}
-                                    icon={{
-                                        url: carIcon,
-                                        anchor: new this.props.google.maps.Point(9,19),
-                                        scaledSize: new this.props.google.maps.Size(18,38)
-                                    }}
-                                />
+                                {this.renderCarMarkers()}
                             </Map>
                         </Grid>
                     </Grid>

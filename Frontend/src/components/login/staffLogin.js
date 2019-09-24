@@ -41,9 +41,9 @@ class Login extends React.Component {
             return response.json();
         }).then(token => {
             const tokenString = JSON.stringify(token);
-            // localStorage.setItem("stafftoken", JSON.parse(tokenString).data.token);
-            // localStorage.setItem("staffid", JSON.parse(tokenString).data.user.id);
-            // change BE to respond with staff details
+            localStorage.setItem("stafftoken", JSON.parse(tokenString).data.token);
+            localStorage.setItem("staffid", JSON.parse(tokenString).data.user.id);
+            localStorage.setItem("staffname", JSON.parse(tokenString).data.user.name);
             window.location.reload();
         })
     };

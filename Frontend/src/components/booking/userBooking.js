@@ -18,6 +18,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Paypal from './../payment/paypal';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -54,7 +60,9 @@ class Booking extends React.Component {
             carSelected: '',
             loading: true,
             userId: '',
-            paid: ""
+            paid: "",
+            date: "2019-01-01",
+            duration: ""
         };
 
         this.getCar = this.getCar.bind(this);
@@ -89,7 +97,6 @@ class Booking extends React.Component {
     }
 
     bookCar() {
-
         fetch('http://157.230.244.234/api/books', {
             method: 'POST',
             headers: {
@@ -99,8 +106,8 @@ class Booking extends React.Component {
             body: JSON.stringify({
                 user_id: this.state.userId,
                 car_id: this.state.carSelected,
-                book_date: '2019-09-24', //change this
-                duration: '5' //and this
+                book_date: this.state.date, //change this
+                duration: this.state.duration //and this
             })
         }).then(res => res.json())
             .catch(err => console.log(err));
@@ -114,6 +121,13 @@ class Booking extends React.Component {
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     };
+
+    handleDateChange(e, date) {
+        console.log(date);
+        this.setState({
+            date: date
+        });
+    }
 
     ButtonPaidCheck() {
         if(this.state.paid !== "") {
@@ -135,7 +149,7 @@ class Booking extends React.Component {
                     fullWidth
                     variant="contained"
                     className={useStyles.submit}
-                    disabled
+                    //disabled
                     onClick={() => this.bookCar()}
                 >
                     Book
@@ -193,6 +207,33 @@ class Booking extends React.Component {
                                     autoFocus
                                     disabled
                                     value={this.state.carList[this.props.data].car_name}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                        margin="normal"
+                                        id="date-picker-dialog"
+                                        label="Date picker dialog"
+                                        format="yyyy-MM-dd"
+                                        value={this.state.date}
+                                        onChange={this.handleDateChange.bind(this)}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }}
+                                    />
+                                </MuiPickersUtilsProvider>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    autoComplete="fname"
+                                    name="duration"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    label="Duration"
+                                    autoFocus
+                                    onChange={this.handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
