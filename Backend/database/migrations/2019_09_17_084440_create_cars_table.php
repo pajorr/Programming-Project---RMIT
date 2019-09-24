@@ -21,6 +21,8 @@ class CreateCarsTable extends Migration
             $table->unsignedInteger('fuel');
             $table->string('description');
             $table->unsignedInteger('price');
+            $table->double('longitude');
+            $table->double('latitude');
             $table->string('image');
             $table->boolean('taken')->default(false);
             $table->timestamps();
