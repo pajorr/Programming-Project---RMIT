@@ -19,6 +19,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Paypal from './../payment/paypal';
 import DateFnsUtils from '@date-io/date-fns';
+import PaypalExpressBtn from 'react-paypal-express-checkout';
 import {
     MuiPickersUtilsProvider,
     KeyboardTimePicker,
@@ -130,7 +131,7 @@ class Booking extends React.Component {
     }
 
     ButtonPaidCheck() {
-        if(this.state.paid !== "") {
+        if(this.state.paid === "paid") {
             return(
                 <Button
                     type="button"
@@ -149,7 +150,7 @@ class Booking extends React.Component {
                     fullWidth
                     variant="contained"
                     className={useStyles.submit}
-                    //disabled
+                    disabled
                     onClick={() => this.bookCar()}
                 >
                     Book
@@ -167,6 +168,11 @@ class Booking extends React.Component {
     }
 
     render() {
+        const client = {
+            sandbox:    'AbqSx8i-kX1D6W2hfNaxJpw0QyoYM_YWp78WuJBHqA2HTfNeoheZDTWR6JNJcCQc3r07hW-tN3cXNqYI',
+            production: 'YOUR-PRODUCTION-APP-ID',
+        };
+
         if(this.state.loading) {
             return 'Loading...'
         }
@@ -238,8 +244,10 @@ class Booking extends React.Component {
                             </Grid>
                             <Grid item xs={12}>
                                 <div onClick={() => this.setState({...this.state.paid, paid: "paid"})}> /*fix this*/
-                                    <Paypal />
                                 </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <PaypalExpressBtn client={client} currency={'AUD'} total={1.00} onSuccess={() => this.setState({...this.state.paid, paid: 'paid'})} />
                             </Grid>
                             <Grid item xs={12}>
                                 <Link to="/">

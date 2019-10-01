@@ -8,7 +8,7 @@ export default class Paypal extends React.Component {
             production: 'YOUR-PRODUCTION-APP-ID',
         }
         return (
-            <PaypalExpressBtn client={client} currency={'USD'} total={1.00} />
+            <PaypalExpressBtn client={client} currency={'AUD'} total={5.00} />
         );
     }
 }
