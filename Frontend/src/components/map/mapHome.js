@@ -103,21 +103,11 @@ export class mapHome extends React.Component {
                     />
                     <CardContent>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            car_name: {obj.car_name}
-                            <br/>
-                            car_type: {obj.car_type}
-                            <br/>
-                            created_at: {obj.created_type}
+                            price: {obj.price}
                             <br/>
                             fuel: {obj.fuel}
                             <br/>
-                            id: {obj.id}
-                            <br/>
                             plate_number: {obj.plate_number}
-                            <br/>
-                            taken: {obj.taken}
-                            <br/>
-                            updated_at: {obj.updated_at}
                             <br/>
                         </Typography>
                         <Button onClick={() => this.handleSelectCar(obj.car_name) /*this is how you properly fire a button method*/}>Book</Button>
@@ -161,7 +151,7 @@ export class mapHome extends React.Component {
 
     renderBookingForm() {
         if(this.state.selectedCar !== "") {
-            return (<Booking data={this.state.selectedCar+1}/>)
+            return (<Booking data={this.state.selectedCar}/>)
         } else {
             return (
                 <div>

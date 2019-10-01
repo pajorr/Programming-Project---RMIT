@@ -1,4 +1,5 @@
 import React from 'react';
+import PaypalExpressBtn from 'react-paypal-express-checkout';
 //0. import propTypes
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
@@ -51,8 +52,8 @@ class MyBooking extends React.Component {
     }
 
     returnCar(carid, id) {
-        let today = new Date();
-        let date = today.getFullYear()+"-"+("0" + (today.getMonth() + 1)).slice(-2)+"-"+("0" + today.getDate()).slice(-2);
+        // let today = new Date();
+        // let date = today.getFullYear()+"-"+("0" + (today.getMonth() + 1)).slice(-2)+"-"+("0" + today.getDate()).slice(-2);
 
         return fetch('http://157.230.244.234/api/returncars/', {
             method: 'POST',
@@ -64,13 +65,57 @@ class MyBooking extends React.Component {
                 user_id: localStorage.getItem("userId"),
                 car_id: carid,
                 book_id: id,
-                date_return: date
+                // date_return: date
             })
         }).then(function res(response) {
             return response.json();
         }).then(() => {
             window.location.reload();
         })
+    }
+
+    setPaid(obj) {
+        fetch('http://157.230.244.234/api/paypal/'+ obj.id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }).then(res => console.log(res))
+            .then(() => {
+                window.location.reload();
+            });
+    }
+
+
+    checkPaid(obj) {
+        if(obj.returned === false) {
+            return(
+                <div>
+                    <Button onClick={() => this.returnCar(obj.car_id, obj.id)}>Return</Button>
+                </div>
+            )
+        }
+
+        if(obj.returned === true && obj.paid === true) {
+            return(
+                <div>
+                    Paid
+                </div>
+            )
+        }
+
+        else {
+            const client = {
+                sandbox:    'AbqSx8i-kX1D6W2hfNaxJpw0QyoYM_YWp78WuJBHqA2HTfNeoheZDTWR6JNJcCQc3r07hW-tN3cXNqYI',
+                production: 'YOUR-PRODUCTION-APP-ID',
+            };
+            return(
+                    <div>
+                        <PaypalExpressBtn client={client} currency={'AUD'} total={obj.total_price} onSuccess={() => this.setPaid(obj)}/>
+                    </div>
+            )
+        }
     }
 
     componentDidMount() {
@@ -92,11 +137,10 @@ class MyBooking extends React.Component {
                             <ListItemText primary={"Car Name: " + obj.car_name} />
                             <ListItemText secondary={"Car Plate: " + obj.plate_number} />
                             <ListItemText secondary={"Car Image: " + obj.image} />
-                            <ListItemText secondary={"Price: "  + obj.price} />
-                            <ListItemText secondary={"Duration: " + obj.duration} />
+                            <ListItemText secondary={"Price: "  + obj.price + "/h"} />
                             <ListItemText secondary={"Booked By: " + obj.name} />
-                            <ListItemText secondary={"Returned?: " + obj.returned}/>
-                            <Button onClick={() => this.returnCar(obj.car_id, obj.id)}>Return</Button>
+                            <ListItemText secondary={"Total Price: " + obj.total_price} />
+                            {this.checkPaid(obj)}
                         </ListItem>
                     </List>
                     <Divider />

@@ -106,9 +106,7 @@ class Booking extends React.Component {
             },
             body: JSON.stringify({
                 user_id: this.state.userId,
-                car_id: this.state.carSelected,
-                book_date: this.state.date, //change this
-                duration: this.state.duration //and this
+                car_id: this.state.carSelected + 1,
             })
         }).then(res => res.json())
             .catch(err => console.log(err));
@@ -130,34 +128,26 @@ class Booking extends React.Component {
         });
     }
 
-    ButtonPaidCheck() {
-        if(this.state.paid === "paid") {
-            return(
-                <Button
-                    type="button"
-                    fullWidth
-                    variant="contained"
-                    className={useStyles.submit}
-                    onClick={() => this.bookCar()}
-                >
-                    Book
-                </Button>
-            )
-        } else {
-            return(
-                <Button
-                    type="button"
-                    fullWidth
-                    variant="contained"
-                    className={useStyles.submit}
-                    disabled
-                    onClick={() => this.bookCar()}
-                >
-                    Book
-                </Button>
-            )
-        }
-    }
+    // ButtonPaidCheck() {
+    //     if(this.state.paid === "paid") {
+    //         return(
+    //
+    //         )
+    //     } else {
+    //         return(
+    //             <Button
+    //                 type="button"
+    //                 fullWidth
+    //                 variant="contained"
+    //                 className={useStyles.submit}
+    //                 disabled
+    //                 onClick={() => this.bookCar()}
+    //             >
+    //                 Book
+    //             </Button>
+    //         )
+    //     }
+    //}
 
     componentDidMount() {
         this.getCar();
@@ -168,11 +158,6 @@ class Booking extends React.Component {
     }
 
     render() {
-        const client = {
-            sandbox:    'AbqSx8i-kX1D6W2hfNaxJpw0QyoYM_YWp78WuJBHqA2HTfNeoheZDTWR6JNJcCQc3r07hW-tN3cXNqYI',
-            production: 'YOUR-PRODUCTION-APP-ID',
-        };
-
         if(this.state.loading) {
             return 'Loading...'
         }
@@ -215,43 +200,51 @@ class Booking extends React.Component {
                                     value={this.state.carList[this.props.data].car_name}
                                 />
                             </Grid>
+                            {/*<Grid item xs={12}>*/}
+                                {/*<MuiPickersUtilsProvider utils={DateFnsUtils}>*/}
+                                    {/*<KeyboardDatePicker*/}
+                                        {/*margin="normal"*/}
+                                        {/*id="date-picker-dialog"*/}
+                                        {/*label="Date picker dialog"*/}
+                                        {/*format="yyyy-MM-dd"*/}
+                                        {/*value={this.state.date}*/}
+                                        {/*onChange={this.handleDateChange.bind(this)}*/}
+                                        {/*KeyboardButtonProps={{*/}
+                                            {/*'aria-label': 'change date',*/}
+                                        {/*}}*/}
+                                    {/*/>*/}
+                                {/*</MuiPickersUtilsProvider>*/}
+                            {/*</Grid>*/}
+                            {/*<Grid item xs={12}>*/}
+                                {/*<TextField*/}
+                                    {/*autoComplete="fname"*/}
+                                    {/*name="duration"*/}
+                                    {/*variant="outlined"*/}
+                                    {/*required*/}
+                                    {/*fullWidth*/}
+                                    {/*label="Duration"*/}
+                                    {/*autoFocus*/}
+                                    {/*onChange={this.handleChange}*/}
+                                {/*/>*/}
+                            {/*</Grid>*/}
                             <Grid item xs={12}>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        margin="normal"
-                                        id="date-picker-dialog"
-                                        label="Date picker dialog"
-                                        format="yyyy-MM-dd"
-                                        value={this.state.date}
-                                        onChange={this.handleDateChange.bind(this)}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                        }}
-                                    />
-                                </MuiPickersUtilsProvider>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    autoComplete="fname"
-                                    name="duration"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Duration"
-                                    autoFocus
-                                    onChange={this.handleChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <div onClick={() => this.setState({...this.state.paid, paid: "paid"})}> /*fix this*/
+                                <div onClick={() => this.setState({...this.state.paid, paid: "paid"})}>
                                 </div>
                             </Grid>
-                            <Grid item xs={12}>
-                                <PaypalExpressBtn client={client} currency={'AUD'} total={1.00} onSuccess={() => this.setState({...this.state.paid, paid: 'paid'})} />
-                            </Grid>
+                            {/*<Grid item xs={12}>*/}
+                                {/*<PaypalExpressBtn client={client} currency={'AUD'} total={1.00} onSuccess={() => this.setState({...this.state.paid, paid: 'paid'})} />*/}
+                            {/*</Grid>*/}
                             <Grid item xs={12}>
                                 <Link to="/">
-                                    {this.ButtonPaidCheck()}
+                                    <Button
+                                        type="button"
+                                        fullWidth
+                                        variant="contained"
+                                        className={useStyles.submit}
+                                        onClick={() => this.bookCar()}
+                                    >
+                                        Book
+                                    </Button>
                                 </Link>
                             </Grid>
                         </Grid>
