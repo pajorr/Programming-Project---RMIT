@@ -30,14 +30,14 @@ class BookedController extends Controller
     {
         
        try{
+            date_default_timezone_set('Australia/Melbourne');
+            $getDate = date("Y-m-d H:i:s");
 
-            $getDate = date("Y-m-d");
-
-            if($request->book_date < $getDate){
+            /*if($request->book_date < $getDate){
                 return response([
                     "please fill the right date",
                 ]);
-            }
+            }*/
 
             $var = Car::findOrFail($request->car_id);
 
@@ -47,13 +47,12 @@ class BookedController extends Controller
                 ]);
             }
 
-            if($var->taken == false && $request->user_id != NULL && $request->car_id != NULL && $request->book_date != NULL && $request->duration != NULL){
+            if($var->taken == false && $request->user_id != NULL && $request->car_id != NULL){
 
                 $newData = [
                 'user_id' => $request->user_id,
                 'car_id' => $request->car_id,
-                'book_date' => $request->book_date,
-                'duration' => $request->duration,
+                'book_date' => $getDate,
                 ];
 
                 $fill = Booked::create($newData);
@@ -100,7 +99,7 @@ class BookedController extends Controller
 
             $var = Booked::leftjoin('cars','cars.id','=', 'bookeds.car_id')
             ->leftjoin('users', 'bookeds.user_id', '=', 'users.id')
-            ->select('bookeds.id', 'bookeds.car_id', 'cars.car_name', 'cars.plate_number', 'cars.image', 'cars.price', 'bookeds.duration', 'bookeds.returned', 'users.name')
+            ->select('bookeds.id', 'bookeds.car_id', 'cars.car_name', 'cars.plate_number', 'cars.image', 'cars.price', 'bookeds.returned', 'users.name', 'bookeds.total_price', 'bookeds.paid')
             ->where('users.id', $id)->get();
 
 
@@ -148,5 +147,11 @@ class BookedController extends Controller
         }catch(Exception $e){
             return $e->getMessage();
         }
+    }
+
+    public function paypal($id){
+        $var = Booked::findOrFail($id);
+        $var->paid = true;
+        $var->save();
     }
 }
