@@ -86,7 +86,7 @@ class Login extends React.Component {
                             autoComplete="current-password"
                             onChange={this.handleChange}
                         />
-                        <Button component={Link} to="/"
+                        <Button component={Link} to="/user"
                                 type="submit"
                                 fullWidth
                                 variant="contained"

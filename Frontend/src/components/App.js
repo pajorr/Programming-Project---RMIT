@@ -12,6 +12,7 @@ import paypal from "./payment/paypal";
 import StaffRegister from "./register/staffRegister";
 import StaffLogin from "./login/staffLogin";
 import StaffLanding from "./landing/staffLanding";
+import UserLanding from "./landing/userLanding";
 import StaffBooking from "./staff/staffBooking";
 import StaffUserList from "./staff/staffUserList";
 import StaffCarList from "./staff/staffCarList";
@@ -35,12 +36,13 @@ export class App extends React.Component {
                             <Route path="/staffregister" component={StaffRegister}/>
                             <Route path="/stafflogin" component={StaffLogin}/>
                             <Route path="/staff" component={StaffLanding}/>
+                            <Route path="/user" component={UserLanding}/>
                             <Route path="/staffbooking" component={StaffBooking}/>
                             <Route path="/staffuserlist" component={StaffUserList}/>
                             <Route path="/staffcarlist" component={StaffCarList}/>
                             <Route path="/mybookings" component={MyBooking}/>
                             <Route path="/staffaddcar" component={StaffCarAdd}/>
-                            <Route render={() => <Redirect to="/" />} />
+                            {/* <Route render={() => <Redirect to="/" />} /> */}
                         </div>
                     </Router>
                 </div>
@@ -63,7 +65,7 @@ export class App extends React.Component {
                             <Route path="/staffuserlist" component={StaffUserList}/>
                             <Route path="/staffcarlist" component={StaffCarList}/>
                             <Route path="/staffaddcar" component={StaffCarAdd}/>
-                            <Route render={() => <Redirect to="/" />} />
+                            {/* <Route render={() => <Redirect to="/" />} /> */}
                         </div>
                     </Router>
                 </div>
