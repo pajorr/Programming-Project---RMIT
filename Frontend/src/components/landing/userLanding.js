@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Grid from "@material-ui/core/Grid/Grid";
+import Profile from "./Profile.js";
 import Button from "@material-ui/core/Button/Button";
 import { Link } from "react-router-dom";
 
@@ -20,7 +21,7 @@ const styles = theme => ({
         textAlign: 'center',
     },
     welcomeMessage: {
-        
+
         textAlign: 'center',
         fontFamily: "Arial",
         padding: "10px",
@@ -39,6 +40,7 @@ class UserLanding extends React.Component {
         const { classes } = this.props;
         return(
             <div>
+                <Profile />
                 <div className={classes.welcomeMessage}>
                    <body> Welcome Back <b>{localStorage.getItem("userName")}</b>!</body>
                 </div>
