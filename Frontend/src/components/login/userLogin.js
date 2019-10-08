@@ -38,7 +38,7 @@ class Login extends React.Component {
                 password: this.state.password
             })
         }).then(function res(response) {
-           return response.json();
+            return response.json();
         }).then(token => {
             const tokenString = JSON.stringify(token);
             localStorage.setItem("token", JSON.parse(tokenString).data.token);

@@ -40,7 +40,7 @@ export class App extends React.Component {
                             <Route path="/staffcarlist" component={StaffCarList}/>
                             <Route path="/mybookings" component={MyBooking}/>
                             <Route path="/staffaddcar" component={StaffCarAdd}/>
-                            <Route render={() => <Redirect to="/" />} />
+                            {/*<Route render={() => <Redirect to="/" />} />*/}
                         </div>
                     </Router>
                 </div>
@@ -63,7 +63,7 @@ export class App extends React.Component {
                             <Route path="/staffuserlist" component={StaffUserList}/>
                             <Route path="/staffcarlist" component={StaffCarList}/>
                             <Route path="/staffaddcar" component={StaffCarAdd}/>
-                            <Route render={() => <Redirect to="/" />} />
+                            {/*<Route render={() => <Redirect to="/" />} />*/}
                         </div>
                     </Router>
                 </div>

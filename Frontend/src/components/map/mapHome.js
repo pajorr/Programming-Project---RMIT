@@ -53,6 +53,10 @@ export class mapHome extends React.Component {
         this.renderBookingForm();
     }
 
+    onMarkerClick(obj) {
+        this.handleSelectCar(obj.car_name);
+    }
+
     getCar() {
         fetch('http://157.230.244.234/api/cars', {
             method: 'GET',
@@ -145,6 +149,7 @@ export class mapHome extends React.Component {
                     anchor: new this.props.google.maps.Point(9,19),
                     scaledSize: new this.props.google.maps.Size(18,38)
                 }}
+                onClick={() => this.onMarkerClick(obj)}
             />
         ))
     }
@@ -155,13 +160,13 @@ export class mapHome extends React.Component {
         } else {
             return (
                 <div>
-                    <Grid container spacing={2}>
-                        <Grid item xs={4}>
-                            <div style={{maxHeight: 600, overflow: 'auto', maxWidth: 600}}>
+                    <Grid container spacing={2} styling={{width: '100vh'}}>
+                        <Grid item md={4} xs={12}>
+                            <div style={{maxHeight: 680, overflow: 'auto', maxWidth: 600}}>
                                 {this.renderCarList()}
                             </div>
                         </Grid>
-                        <Grid item xs={8}>
+                        <Grid item md={8} xs={12}>
                             <Map
                                 google={this.props.google}
                                 zoom={8}
@@ -172,22 +177,22 @@ export class mapHome extends React.Component {
                             </Map>
                         </Grid>
                     </Grid>
-                    <div className={style.root} style={{background: "linear-gradient(45deg, #00c853 10%, #69f0ae 30%, #b9f6ca 90%)", color: "#fdfdfd", marginTop: "20px"}}>
-                        <Container component="main" className={style.main} maxWidth="sm">
-                            <Typography variant="h2" component="h1" gutterBottom style={{paddingTop: 20}}>
-                                GoCar
-                            </Typography>
-                            <Typography variant="h5" component="h2" gutterBottom>
-                                {'We are your number one solution to ride sharing.'}
-                            </Typography>
-                            <Typography variant="body1">Ride with us now.</Typography>
-                        </Container>
-                        <footer className={style.footer} style={{paddingBottom: 20}}>
-                            <Container maxWidth="sm">
-                                <Typography variant="body1">RMITⒸ Adrian, Ayrton, Dylan, Yonas</Typography>
-                            </Container>
-                        </footer>
-                    </div>
+                    {/*<div className={style.root} style={{background: "linear-gradient(45deg, #00c853 10%, #69f0ae 30%, #b9f6ca 90%)", color: "#fdfdfd", marginTop: "20px"}}>*/}
+                        {/*<Container component="main" className={style.main} maxWidth="sm">*/}
+                            {/*<Typography variant="h2" component="h1" gutterBottom style={{paddingTop: 20}}>*/}
+                                {/*GoCar*/}
+                            {/*</Typography>*/}
+                            {/*<Typography variant="h5" component="h2" gutterBottom>*/}
+                                {/*{'We are your number one solution to ride sharing.'}*/}
+                            {/*</Typography>*/}
+                            {/*<Typography variant="body1">Ride with us now.</Typography>*/}
+                        {/*</Container>*/}
+                        {/*<footer className={style.footer} style={{paddingBottom: 20}}>*/}
+                            {/*<Container maxWidth="sm">*/}
+                                {/*<Typography variant="body1">RMITⒸ Adrian, Ayrton, Dylan, Yonas</Typography>*/}
+                            {/*</Container>*/}
+                        {/*</footer>*/}
+                    {/*</div>*/}
                 </div>
             )
         }
@@ -204,8 +209,8 @@ export class mapHome extends React.Component {
 
 
 const mapStyles = {
-    width: '66.5%',
-    height: '80%',
+    width: '65vw',
+    height: '88%',
 };
 
 export default GoogleApiWrapper({
