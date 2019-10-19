@@ -15,6 +15,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import DirectionsIcon from '@material-ui/icons/Directions';
 import Icon from '@material-ui/core/Icon';
 import ViewIcon from './../../rsc/staff.png';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import PaypalExpressBtn from 'react-paypal-express-checkout';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 const styles = theme => ({
     buttonStyle: {
@@ -75,16 +82,173 @@ const styles = theme => ({
       divider: {
         height: 28,
         margin: 4,
-      },   
+      }, 
+      vertical: {
+        width: 4,
+        margin: 4,
+      },  
+      orangeAvatar: {
+        margin: 10,
+        color: '#fff',
+        backgroundColor: deepOrange[500],
+      },
 });
 
 class UserLanding extends React.Component {
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            bookingList: [],
+        }
+    }
     logoutUser() {
         localStorage.removeItem("stafftoken");
         localStorage.removeItem("staffid");
         localStorage.removeItem("staffname");
     }
+
+    getBookingList() {
+        fetch('http://157.230.244.234/api/books/' + localStorage.getItem("userId"), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }).then(res => res.json())
+            .then(data => {
+                const bookData = JSON.stringify(data);
+                const obj = JSON.parse(bookData);
+                this.setState({...this.state.bookingList, bookingList: obj});
+                console.log(this.state.bookingList);
+            })
+            .catch(err => console.log(err));
+    }
+
+    componentDidMount() {
+        this.getBookingList();
+    }
+
+    checkPaid(obj) {
+        if(obj.returned === false) {
+            return(
+                <div>
+                    <Button onClick={() => this.returnCar(obj.car_id, obj.id)}>Return</Button>
+                </div>
+            )
+        }
+
+        if(obj.returned === true && obj.paid === true) {
+            return(
+                <div>
+                    Paid
+                </div>
+            )
+        }
+
+        else {
+            const client = {
+                sandbox:    'AbqSx8i-kX1D6W2hfNaxJpw0QyoYM_YWp78WuJBHqA2HTfNeoheZDTWR6JNJcCQc3r07hW-tN3cXNqYI',
+                production: 'YOUR-PRODUCTION-APP-ID',
+            };
+            return(
+                    <div>
+                        <PaypalExpressBtn client={client} currency={'AUD'} total={obj.total_price} onSuccess={() => this.setPaid(obj)}/>
+                    </div>
+            )
+        }
+    }
+    renderList(obj){
+        if(obj.returned === true && obj.paid === true) 
+        {
+            
+        }
+
+    }
+    renderBorrowedList() {
+
+        //2. declare prop constant
+        const { classes } = this.props;
+        return this.state.bookingList.map(obj =>
+            (
+                <div className={classes.root}>
+                        <ListItem alignItems="flex-start">
+                                        <ListItemAvatar>
+                                        <Avatar alt={obj.car_name} src={obj.image} />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                        primary={obj.car_name}
+                                        secondary={
+                                                    <React.Fragment>
+                                                        <Typography
+                                                            component="span"
+                                                            variant="body2"
+                                                            className={classes.inline}
+                                                            color="textPrimary"
+                                                        >
+                                                            {obj.plate_number}
+                                                        </Typography>
+                                                        {obj.total_price} | {obj.price} | {obj.name}
+                                                        <Avatar className={classes.orangeAvatar}>$ {obj.price}</Avatar>
+                                                    </React.Fragment>
+                                                    }                                        
+                                        />
+                                    <Grid>  
+                                        <Divider orientation="vertical" />
+                                    </Grid>
+                                    
+                                    {this.checkPaid(obj)}
+                        </ListItem>                    
+                    <Divider />
+                </div>
+            )
+        )
+    }
+
+    renderReturnedList() {
+
+        //2. declare prop constant
+        const { classes } = this.props;
+        
+        return this.state.bookingList.map(obj =>
+            (
+                
+                    <div className={classes.root}>
+                            
+                            <ListItem alignItems="flex-start">
+                                            <ListItemAvatar>
+                                            <Avatar alt={obj.car_name} src={obj.image} />
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                            primary={obj.car_name}
+                                            secondary={
+                                                        <React.Fragment>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body2"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                            >
+                                                                {obj.plate_number}
+                                                            </Typography>
+                                                            {obj.total_price} | {obj.price} | {obj.name}
+                                                            <Avatar className={classes.orangeAvatar}>$ {obj.price}</Avatar>
+                                                        </React.Fragment>
+                                                        }                                        
+                                            />
+                                        <Grid>  
+                                            <Divider orientation="vertical" />
+                                        </Grid>
+                                        
+                                        {this.checkPaid(obj)}
+                            </ListItem>                    
+                        <Divider />
+                    </div>
+                
+            )
+        )
+    }
+    
 
     render() {
         const { classes } = this.props;
@@ -121,7 +285,9 @@ class UserLanding extends React.Component {
                                         <MenuIcon />
                                     </IconButton> */}
                                 </Paper>
-                            
+                                <List>
+                                    {this.renderBorrowedList()}
+                                </List>
                                 <Grid >
                                 <Button variant="contained" size="large" className={classes.button} startIcon={<ViewIcon />}>
                                     View All
@@ -152,7 +318,15 @@ class UserLanding extends React.Component {
                                     {/* <IconButton className={classes.iconButton} aria-label="menu">
                                         <MenuIcon />
                                     </IconButton> */}
-                                </Paper>
+                                    </Paper>
+                                    <List>
+                                        {this.renderReturnedList()}
+                                    </List>
+                                    <Grid >
+                                        <Button variant="contained" size="large" className={classes.button} startIcon={<ViewIcon />}>
+                                            View All
+                                        </Button>
+                                    </Grid>
                             </Paper>
                         </Grid>
                     </Grid>
