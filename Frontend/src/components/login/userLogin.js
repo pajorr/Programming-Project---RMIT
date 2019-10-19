@@ -54,7 +54,7 @@ class Login extends React.Component {
 
     render() {
         return(
-            <Container component="main" maxWidth="xs">
+            <Container className="main" component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={useStyles.paper}>
                     <Typography component="h1" variant="h5">
