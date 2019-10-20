@@ -1,14 +1,14 @@
-To run this program, the following things are required:
+## To run this program, the following things are required:
 
 PHP (we use PHP 7.2.12)
 Composer
 Any relational DB (ex: MySql/PostgreSql)
 After cloning the project, copy the .env.example and name it .env then go to the project folder from terminal and run these following commands
 
-composer install
-php artisan key:generate
-php artisan jwt:secret
-A database is needed. Create your DB, but don't create any table. The tables will be migrated from the code.
+- **composer install
+- **php artisan key:generate
+- **php artisan jwt:secret
+- **A database is needed. Create your DB, but don't create any table. The tables will be migrated from the code.
 
 In the .env file, complete your DB credentials. Our team uses MySql DB for this project.
 
