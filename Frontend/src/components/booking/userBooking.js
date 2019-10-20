@@ -237,6 +237,8 @@ class Booking extends React.Component {
                             <Grid item xs={12}>
                                 <Link to="/">
                                     <Button
+                                        id="bookingbutton"
+                                        name="bookingbutton"
                                         type="button"
                                         fullWidth
                                         variant="contained"
